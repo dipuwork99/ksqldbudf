@@ -8,23 +8,23 @@ import java.util.ArrayList;
 import java.util.List;
 import com.example.*;
 
-@UdtfDescription(name = "get_geoid",
+@UdtfDescription(name = "getcode_for_codetype",
                  author = "example user",
                  version = "1.5.0",
-                 description = "Disassembles a sequence and produces new elements concatenated with indices.")
-public class GeoIDCodeExtractorUdtf {
+                 description = "From an alternate code array type retreieve the code for a given code type")
+public class AlternateCodeExtractorUdtf {
 
-    private final String DELIMITER = "-";
-
-    @Udtf(description = "Takes an array of any type and returns rows with each element paired to its index.")
-    public <E> List<String> indexSequence(@UdfParameter List<E> x) {
+  
+    @Udtf(description = "Takes an array of alternate type  and returns the code value for the given code type.")
+    public <E> List<String> getCodeForCodeType(@UdfParameter List<E> x , @UdfParameter String codeType) {
         List<String> result = new ArrayList<>();
 
         for(int i = 0; i < x.size(); i++) { 
-        	if(((Struct)x.get(i)).getString("codeType").equals("GEOID")) {
+        	if(((Struct)x.get(i)).getString("codeType").equals(codeType)) {
         		result.add(((Struct)x.get(i)).getString("code"));
         	}
         }
+
         return result;
     }
 

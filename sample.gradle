@@ -1,0 +1,42 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+}
+
+plugins {
+    id "java"
+}
+
+sourceCompatibility = "1.8"
+targetCompatibility = "1.8"
+version = "0.0.1"
+
+repositories {
+    mavenCentral()
+
+
+    maven {
+        url "https://packages.confluent.io/maven"
+    }
+}
+
+dependencies {
+    implementation 'io.confluent.ksql:ksql-udf:5.4.3'
+    testImplementation 'junit:junit:4.13.2'
+}
+
+task copyJar(type: Copy) {
+    from jar
+    into "extensions/"
+}
+
+build.dependsOn copyJar
+
+test {
+    testLogging {
+        outputs.upToDateWhen { false }
+        showStandardStreams = true
+        exceptionFormat = "full"
+    }
+}

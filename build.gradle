@@ -26,6 +26,7 @@ dependencies {
     implementation "io.confluent.ksql:ksqldb-udf:6.2.0"
     implementation "org.apache.kafka:kafka_2.13:2.5.0"
     implementation "org.apache.kafka:connect-api:2.5.0"
+    testImplementation 'junit:junit:4.13.2'
 }
 
 apply plugin: "com.github.johnrengelman.shadow"
@@ -39,4 +40,12 @@ shadowJar {
     archiveBaseName = "example-udfs"
     archiveClassifier = ""
     destinationDirectory = file("extensions")
+}
+
+test {
+    testLogging {
+        outputs.upToDateWhen { false }
+        showStandardStreams = true
+        exceptionFormat = "full"
+    }
 }
